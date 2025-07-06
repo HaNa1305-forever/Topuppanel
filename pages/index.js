@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -20,8 +19,13 @@ export default function Home() {
   ];
 
   const handleSubmit = () => {
-    if (!selected || !username || !email || !proof) return alert('Lengkapi semua data');
+    if (!selected || !username || !email || !proof) {
+      alert('Lengkapi semua data!');
+      return;
+    }
+
     alert(`Pesanan berhasil dikirim:\n${selected.ram} - ${duration}\nUser: ${username}`);
+    // Nanti data bisa dikirim ke Firebase atau API Pterodactyl
   };
 
   return (
@@ -30,17 +34,25 @@ export default function Home() {
         <title>ClarivenStore Panel</title>
       </Head>
 
-      <h1 className="text-3xl font-bold text-center text-red-500 mb-6">ClarivenStore - Topup Panel Pterodactyl</h1>
+      <h1 className="text-3xl font-bold text-center text-red-500 mb-6">
+        ClarivenStore - Topup Panel Pterodactyl
+      </h1>
 
       <div className="text-center mb-6">
-        <Link href="/admin" className="text-xs text-gray-600 hover:text-green-400">Login Admin (rahasia)</Link>
+        <Link href="/admin" className="text-xs text-gray-600 hover:text-green-400">
+          Login Admin (rahasia)
+        </Link>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
         {paketList.map((paket, i) => (
           <div
             key={i}
-            className={\`p-4 rounded-xl border cursor-pointer hover:bg-red-700 \${selected?.ram === paket.ram ? 'bg-red-600 border-white' : 'bg-gray-800 border-gray-600'}\`}
+            className={`p-4 rounded-xl border cursor-pointer hover:bg-red-700 ${
+              selected?.ram === paket.ram
+                ? 'bg-red-600 border-white'
+                : 'bg-gray-800 border-gray-600'
+            }`}
             onClick={() => setSelected(paket)}
           >
             <h2 className="text-xl font-bold">{paket.ram}</h2>
@@ -52,7 +64,11 @@ export default function Home() {
       <div className="max-w-xl mx-auto space-y-4">
         <div>
           <label className="block mb-1">Durasi:</label>
-          <select className="w-full bg-gray-900 p-2 rounded" value={duration} onChange={e => setDuration(e.target.value)}>
+          <select
+            className="w-full bg-gray-900 p-2 rounded"
+            value={duration}
+            onChange={e => setDuration(e.target.value)}
+          >
             <option>1 Bulan</option>
             <option>Permanen</option>
           </select>
@@ -96,5 +112,4 @@ export default function Home() {
       </div>
     </div>
   );
-    }
-    
+              }
